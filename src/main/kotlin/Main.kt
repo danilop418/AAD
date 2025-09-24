@@ -5,12 +5,13 @@ import java.nio.file.Paths
 import java.nio.file.StandardOpenOption
 
 fun main() {
-    createFile(".\\fichero.txt")
-    val lines = readFile(".\\fichero.txt")
-
-    for (line in lines){
-        println(line)
-    }
+//    createFile(".\\fichero.txt")
+//    val lines = readFile(".\\fichero.txt")
+//
+//    for (line in lines){
+//        println(line)
+//    }
+    writeFile(".\\fichero2.txt", listOf("Hola","Hola"))
 }
 
 fun createFile(filePath: String) {
@@ -28,7 +29,9 @@ fun readFile(filePath: String): List<String> {
 
 fun writeFile(filePath: String, content: List<String>) {
     val path = Paths.get(filePath)
-    Files.write(path, content, StandardOpenOption.APPEND)
+    //always CREATE_NEW
+    Files.write(path, content, StandardOpenOption.CREATE_NEW,
+        StandardOpenOption.APPEND)
 }
 
 
