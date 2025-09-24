@@ -3,6 +3,7 @@ package org.example
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.nio.file.StandardOpenOption
+import java.util.Scanner
 
 fun main() {
 //    createFile(".\\fichero.txt")
@@ -29,8 +30,9 @@ fun readFile(filePath: String): List<String> {
 
 fun writeFile(filePath: String, content: List<String>) {
     val path = Paths.get(filePath)
-    //always CREATE_NEW
-    Files.write(path, content, StandardOpenOption.CREATE_NEW,
+    //always CREATE
+    Files.write(path, content, StandardOpenOption.CREATE,
+        //overwrite without append
         StandardOpenOption.APPEND)
 }
 
