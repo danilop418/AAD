@@ -76,4 +76,5 @@ fun readBinaryStream(filePath: String):List<String> {
             readBytes = file.read(buffer)
         }
     }
+    return content.lines()
 }
