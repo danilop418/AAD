@@ -66,7 +66,7 @@ fun writeLineStream(filePath: String, lines: List<String>) {
     }
 }
 
-fun readBinaryStream(filePath: String) {
+fun readBinaryStream(filePath: String):List<String> {
     val content = StringBuilder()
     FileInputStream(filePath).use { file ->
         val buffer = ByteArray(1024)
