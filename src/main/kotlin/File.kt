@@ -2,6 +2,7 @@ package org.example
 
 import java.io.BufferedReader
 import java.io.BufferedWriter
+import java.io.FileInputStream
 import java.io.FileReader
 import java.io.FileWriter
 import java.nio.file.Files
@@ -16,7 +17,7 @@ fun main() {
 //        println(line)
 //    }
 //    writeFile(".\\fichero2.txt", listOf("Hola","Hola"))
-    writeLineStream(".\\fichero.txt",listOf("linea1","linea2","linea3"))
+    writeLineStream(".\\fichero.txt", listOf("linea1", "linea2", "linea3"))
     print(readFileStream(".\\fichero2.txt"))
     println("written file")
 }
@@ -61,6 +62,18 @@ fun writeLineStream(filePath: String, lines: List<String>) {
         for (line in lines) {
             writer.write(line)
             writer.newLine()
+        }
+    }
+}
+
+fun readBinary(filePath: String) {
+    var content = StringBuilder()
+    FileInputStream(filePath).use { file ->
+        var buffer = ByteArray(1024)
+        var readBytes = file.read(buffer)
+        while (readBytes != -1) {
+            content.append(String(buffer, 0, readBytes, Charsets.UTF_8))
+            readBytes = file.read(buffer)
         }
     }
 }
