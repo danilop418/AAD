@@ -3,6 +3,7 @@ package org.example
 import java.io.BufferedReader
 import java.io.BufferedWriter
 import java.io.FileInputStream
+import java.io.FileOutputStream
 import java.io.FileReader
 import java.io.FileWriter
 import java.nio.file.Files
@@ -66,10 +67,10 @@ fun writeLineStream(filePath: String, lines: List<String>) {
     }
 }
 
-fun readBinaryStream(filePath: String):List<String> {
+fun readBinaryStream(filePath: String): List<String> {
     val content = StringBuilder()
     FileInputStream(filePath).use { file ->
-        val buffer = ByteArray(1024)
+        var buffer = ByteArray(1024)
         var readBytes = file.read(buffer)
         while (readBytes != -1) {
             content.append(String(buffer, 0, readBytes, Charsets.UTF_8))
@@ -77,4 +78,15 @@ fun readBinaryStream(filePath: String):List<String> {
         }
     }
     return content.lines()
+}
+
+fun writeBinaryStream(filePath: String, data: List<String>): Boolean {
+    FileOutputStream(filePath, true).use { file ->
+        for (line in data) {
+            var bytes = line.toByteArray(Charsets.UTF_8)
+            file.write(bytes)
+            file.write("\n".toByteArray(Charsets.UTF_8))
+        }
+    }
+    return true
 }
