@@ -1,11 +1,12 @@
 package org.example
 
 import java.io.BufferedReader
+import java.io.BufferedWriter
 import java.io.FileReader
+import java.io.FileWriter
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.nio.file.StandardOpenOption
-import java.util.Scanner
 
 fun main() {
 //    createFile(".\\fichero.txt")
@@ -15,7 +16,9 @@ fun main() {
 //        println(line)
 //    }
 //    writeFile(".\\fichero2.txt", listOf("Hola","Hola"))
+    writeLineStream(".\\fichero.txt",listOf("linea1","linea2","linea3"))
     print(readFileStream(".\\fichero2.txt"))
+    println("written file")
 }
 
 fun createFile(filePath: String) {
@@ -34,9 +37,11 @@ fun readFile(filePath: String): List<String> {
 fun writeFile(filePath: String, content: List<String>) {
     val path = Paths.get(filePath)
     //always CREATE
-    Files.write(path, content, StandardOpenOption.CREATE,
+    Files.write(
+        path, content, StandardOpenOption.CREATE,
         //overwrite without append
-        StandardOpenOption.APPEND)
+        StandardOpenOption.APPEND
+    )
 }
 
 fun readFileStream(filePath: String): List<String> {
@@ -49,4 +54,13 @@ fun readFileStream(filePath: String): List<String> {
         }
     }
     return lines
+}
+
+fun writeLineStream(filePath: String, lines: List<String>) {
+    BufferedWriter(FileWriter(filePath, true)).use { writer ->
+        for (line in lines) {
+            writer.write(line)
+            writer.newLine()
+        }
+    }
 }
