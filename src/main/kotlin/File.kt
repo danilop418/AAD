@@ -67,9 +67,9 @@ fun writeLineStream(filePath: String, lines: List<String>) {
 }
 
 fun readBinary(filePath: String) {
-    var content = StringBuilder()
+    val content = StringBuilder()
     FileInputStream(filePath).use { file ->
-        var buffer = ByteArray(1024)
+        val buffer = ByteArray(1024)
         var readBytes = file.read(buffer)
         while (readBytes != -1) {
             content.append(String(buffer, 0, readBytes, Charsets.UTF_8))
