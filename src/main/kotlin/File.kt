@@ -2,10 +2,13 @@ package org.example
 
 import java.io.BufferedReader
 import java.io.BufferedWriter
+import java.io.EOFException
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.FileReader
 import java.io.FileWriter
+import java.io.ObjectInputStream
+import java.nio.charset.Charset
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.nio.file.StandardOpenOption
@@ -18,11 +21,11 @@ fun main() {
 //        println(line)
 //    }
 //    writeFile(".\\fichero2.txt", listOf("Hola","Hola"))
-    writeLineStream(".\\fichero.txt", listOf("linea1", "linea2", "linea3"))
-    print(readFileStream(".\\fichero2.txt"))
-    println("written file")
+//    writeLineStream(".\\fichero.txt", listOf("linea1", "linea2", "linea3"))
+//    print(readFileStream(".\\fichero2.txt"))
+//    println("written file")
     writeBinaryStream(".\\fichero3.txt", listOf("linea1333", "linea2333"))
-    readBinaryStream( ".\\fichero3.txt")
+    readBinaryStream(".\\fichero3.txt")
 }
 
 fun createFile(filePath: String) {
@@ -69,25 +72,27 @@ fun writeLineStream(filePath: String, lines: List<String>) {
     }
 }
 
-fun readBinaryStream(filePath: String): List<String> {
-    val content = StringBuilder()
-    FileInputStream(filePath).use { file ->
-        var buffer = ByteArray(1024)
-        var readBytes = file.read(buffer)
-        while (readBytes != -1) {
-            content.append(String(buffer, 0, readBytes, Charsets.UTF_8))
-            readBytes = file.read(buffer)
+fun readBinaryStream(filePath: String): List<Any> {
+    var elems = mutableListOf<Any>()
+    ObjectInputStream(FileInputStream(filePath)).use { input ->
+        while (true) {
+            try {
+                elems.add(input.readObject())
+            } catch (e: EOFException) {
+                break
+            }
         }
     }
-    return content.lines()
+    return elems
 }
 
 fun writeBinaryStream(filePath: String, data: List<String>): Boolean {
     FileOutputStream(filePath, true).use { file ->
         for (line in data) {
             var bytes = line.toByteArray(Charsets.UTF_8)
+            print(bytes.contentToString())
             file.write(bytes)
-            file.write("\n".toByteArray(Charsets.UTF_8))
+            file.write("\n".toByteArray())
         }
     }
     return true
