@@ -8,7 +8,7 @@ import java.io.FileOutputStream
 import java.io.FileReader
 import java.io.FileWriter
 import java.io.ObjectInputStream
-import java.nio.charset.Charset
+import java.io.ObjectOutputStream
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.nio.file.StandardOpenOption
@@ -86,14 +86,10 @@ fun readBinaryStream(filePath: String): List<Any> {
     return elems
 }
 
-fun writeBinaryStream(filePath: String, data: List<String>): Boolean {
-    FileOutputStream(filePath, true).use { file ->
-        for (line in data) {
-            var bytes = line.toByteArray(Charsets.UTF_8)
-            print(bytes.contentToString())
-            file.write(bytes)
-            file.write("\n".toByteArray())
+fun writeBinaryStream(filePath: String, data: List<Any>) {
+    ObjectOutputStream(FileOutputStream(filePath)).use { file ->
+        for (elem in data) {
+            file.writeObject(elem)
         }
     }
-    return true
 }
