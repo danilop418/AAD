@@ -24,8 +24,8 @@ fun main() {
 //    writeLineStream(".\\fichero.txt", listOf("linea1", "linea2", "linea3"))
 //    print(readFileStream(".\\fichero2.txt"))
 //    println("written file")
-    writeBinaryStream(".\\fichero3.txt", listOf("linea1333", "linea2333"))
-    readBinaryStream(".\\fichero3.txt")
+    writeBinaryStream(".\\fichero5.txt", listOf("Hola",456, listOf("elemento1","elemento2")))
+    readBinaryStream(".\\fichero5.txt")
 }
 
 fun createFile(filePath: String) {
