@@ -25,7 +25,10 @@ fun main() {
 //    print(readFileStream(".\\fichero2.txt"))
 //    println("written file")
     writeBinaryStream(".\\fichero5.txt", listOf("Hola",456, listOf("elemento1","elemento2")))
-    readBinaryStream(".\\fichero5.txt")
+    val data = readBinaryStream(".\\fichero5.txt")
+    for ( element in data) {
+        println(element)
+    }
 }
 
 fun createFile(filePath: String) {
